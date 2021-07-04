@@ -75,13 +75,18 @@ public class HttpRequestFormOtherResolver {
                     break;
                 }
             }
+            //索引
             if (count == boundaryLen) {
+                //单个参数结束索引
                 if (i > 0)
                     paramEnd = true;
+                //开始解析单个参数
                 paramStart = true;
+                //增加效率
                 i += boundaryLen + 2 - 1;
             }
 
+            //解析单个参数
             if (paramStart) {
                 for (int j = 0; j < 2; j++) {
                     if (body[i + j] == sep[j]) {
@@ -96,10 +101,12 @@ public class HttpRequestFormOtherResolver {
                     System.arraycopy(body, cursor, line, 0, i - cursor);
 
                     if (isLineBlank(line)) {
+                        //参数值解析索引
                         paramStart = false;
                         paramEnd = false;
                         cursor = i + 2;
                     } else {
+                        //解析参数key
                         String lineStr = new String(line);
                         if (lineStr.startsWith("Content-Disposition: form-data; ")) {
                             paramItem = resolveParam(lineStr);
@@ -111,6 +118,7 @@ public class HttpRequestFormOtherResolver {
                 sep_count = 0;
             }
 
+            //解析参数值，结束索引
             if (paramEnd) {
                 if (paramItem == null) {
                     return null;
@@ -126,6 +134,7 @@ public class HttpRequestFormOtherResolver {
                 list.add(paramItem);
 
                 cursor = i+1;
+                //更新索引
                 paramEnd = false;
             }
 

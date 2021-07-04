@@ -32,6 +32,14 @@ public class HttpRequestFormResolver {
         return paramItems;
     }
 
+    /**
+     * 按照索引，解析单个参数
+     * @param body
+     * @param start
+     * @param end
+     * @param sep
+     * @return
+     */
     private static ParamItem resolveParam(byte[] body, int start, int end, byte[] sep) {
         int count = 0;
         int cursor = start;
@@ -108,6 +116,12 @@ public class HttpRequestFormResolver {
         return false;
     }
 
+    /**
+     * 按照header的边界创建索引
+     * @param body
+     * @param boundary
+     * @return
+     */
     private static List<Integer> boundaryIndex(byte[] body, byte[] boundary){
         int count = 0;
         List<Integer> list = new ArrayList<>();
